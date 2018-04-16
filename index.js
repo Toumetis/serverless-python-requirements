@@ -32,6 +32,8 @@ class ServerlessPythonRequirements {
       dockerImage: null,
       dockerFile: null,
       pipCmdExtraArgs: [],
+      pipPostInstallScript: null,
+      pipPostInstallArgs: null,
       noDeploy: [
         'boto3',
         'botocore',
@@ -44,6 +46,7 @@ class ServerlessPythonRequirements {
         'setuptools',
       ],
       vendor: '',
+      verbose: this.verbose
     }, this.serverless.service.custom && this.serverless.service.custom.pythonRequirements || {});
     if (options.dockerizePip === 'non-linux') {
       options.dockerizePip = process.platform !== 'linux';
@@ -78,6 +81,7 @@ class ServerlessPythonRequirements {
     this.serverless = serverless;
     this.servicePath = this.serverless.config.servicePath;
     this.warningLogged = false;
+    this.verbose = options.verbose;
 
     this.commands = {
       requirements: {
